@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
 import { getAllProjects } from "../apis/projects/getAllProjects";
+import ProjectCard from "../components/ProjectCard";
 
 const Home = () => {
   const { data, status } = useQuery(["projects"], getAllProjects, {
@@ -12,16 +12,15 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className="container mx-auto px-4 flex flex-wrap gap-6">
       {data?.map((project) => (
-        <Link to={`project/${project.id}`}>
-          <div
-            key={project.id}
-            style={{ width: 270, height: 92, objectFit: "cover" }}
-          >
-            {project.name}
-          </div>
-        </Link>
+        <ProjectCard
+          key={project.id}
+          id={project.id}
+          name={project.name}
+          platform={project.platform}
+          thumbnail={project.thumbnail}
+        />
       ))}
     </div>
   );

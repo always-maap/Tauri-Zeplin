@@ -21,6 +21,8 @@ const Project = () => {
           {screenSection.name}
         </Link>
       ))}
+
+      <Outlet />
     </div>
   );
 };

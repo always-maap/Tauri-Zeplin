@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { IMAGE_SERVER_URL } from "../constants/api";
 import { getThumbnailencoded } from "../helpers/normalizeThumbnail";
 import { Project } from "../types/project";
+import WithHover from "./WithHover";
 
 type Props = {
   id: Project["id"];
@@ -25,22 +26,22 @@ const ProjectCard: FC<Props> = (props) => {
 
   return (
     <Link to={`project/${id}`}>
-      <div className="relative">
-        <div className="absolute w-full h-full hover:bg-blue-300/20 hover:border-2 hover:border-blue-300" />
+      <WithHover>
         <div
           className="text-slate-900 border-2 border-slate-200 rounded"
           style={{ width: 272, height: 215 }}
         >
           <img
             src={`${IMAGE_SERVER_URL}/${encodedThumbnail}?${options}`}
-            style={{ width: "100%", height: 92 }}
+            height={92}
+            className="w-full"
           />
           <div className="p-2 m-2">
             <div className="flex uppercase text-amber-500">{platform}</div>
             <span className="text-xl font-bold text-slate-700">{name}</span>
           </div>
         </div>
-      </div>
+      </WithHover>
     </Link>
   );
 };

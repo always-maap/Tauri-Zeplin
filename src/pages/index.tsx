@@ -1,5 +1,6 @@
 import { useQuery } from "react-query";
 import { getAllProjects } from "../apis/projects/getAllProjects";
+import Container from "../components/Container";
 import ProjectCard from "../components/ProjectCard";
 
 const Home = () => {
@@ -8,11 +9,11 @@ const Home = () => {
   });
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return <Container>Loading...</Container>;
   }
 
   return (
-    <div className="container mx-auto px-4 flex flex-wrap gap-6">
+    <Container className=" flex flex-wrap gap-6">
       {data?.map((project) => (
         <ProjectCard
           key={project.id}
@@ -22,7 +23,7 @@ const Home = () => {
           thumbnail={project.thumbnail}
         />
       ))}
-    </div>
+    </Container>
   );
 };
 

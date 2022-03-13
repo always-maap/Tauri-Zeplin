@@ -21,6 +21,7 @@ const Home = () => {
           name={project.name}
           platform={project.platform}
           thumbnail={project.thumbnail}
+          updated={project.updated}
         />
       ))}
     </Container>

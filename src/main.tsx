@@ -29,7 +29,15 @@ dayjs.updateLocale("en", {
   },
 });
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      cacheTime: Infinity,
+      refetchOnMount: false,
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>

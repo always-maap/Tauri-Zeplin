@@ -1,19 +1,35 @@
-import { useQuery } from "react-query";
+import { useEffect } from "react";
+import { useQuery, useQueryClient } from "react-query";
 import { getAllProjects } from "../apis/projects/getAllProjects";
+import { getScreenSections } from "../apis/projects/getScrrenSections";
 import Container from "../components/Container";
 import ProjectCard from "../components/ProjectCard";
+import { useHeader } from "../hooks/useHeader";
 
 const Home = () => {
+  const queryClient = useQueryClient();
+  const { setHeaderTitle, setPreviousPage } = useHeader();
   const { data, status } = useQuery(["projects"], getAllProjects, {
-    refetchOnWindowFocus: false,
+    onSuccess: (projects) => {
+      projects.map((project) => {
+        queryClient.prefetchQuery(["sections", project.id], () =>
+          getScreenSections(project.id)
+        );
+      });
+    },
   });
+
+  useEffect(() => {
+    setHeaderTitle("Workspace");
+    setPreviousPage(undefined);
+  }, []);
 
   if (status === "loading") {
     return <Container>Loading...</Container>;
   }
 
   return (
-    <Container className=" flex flex-wrap gap-6">
+    <Container className="flex flex-wrap gap-6 py-4">
       {data?.map((project) => (
         <ProjectCard
           key={project.id}

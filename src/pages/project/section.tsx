@@ -16,7 +16,7 @@ const Screen = () => {
   return (
     <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-2">
       {data?.map((screen) => (
-        <Link to="/" key={screen.id}>
+        <Link to={`/project/${projectId}/screen/${screen.id}`} key={screen.id}>
           <div className="w-[240]">
             <WithHover>
               <img

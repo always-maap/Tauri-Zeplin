@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { getAllProjects } from "../apis/projects/getAllProjects";
-import { getScreenSections } from "../apis/projects/getScrrenSections";
+import { getScreenSections } from "../apis/projects/getScreenSections";
 import Container from "../components/Container";
 import ProjectCard from "../components/ProjectCard";
 import { useHeader } from "../hooks/useHeader";
@@ -28,9 +28,13 @@ const Home = () => {
     return <Container>Loading...</Container>;
   }
 
+  if (status !== "success") {
+    return <Container>Error</Container>;
+  }
+
   return (
     <Container className="flex flex-wrap gap-6 py-4">
-      {data?.map((project) => (
+      {data.map((project) => (
         <ProjectCard
           key={project.id}
           id={project.id}

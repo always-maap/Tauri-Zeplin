@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { Link, Outlet, useParams } from "react-router-dom";
-import { getScreenSections } from "../../apis/projects/getScrrenSections";
+import { getScreenSections } from "../../apis/projects/getScreenSections";
 import Button from "../../components/Button";
 import Container from "../../components/Container";
 import { useHeader } from "../../hooks/useHeader";

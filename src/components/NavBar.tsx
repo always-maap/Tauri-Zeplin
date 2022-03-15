@@ -12,10 +12,12 @@ const NavBar: FC<Props> = () => {
   return (
     <header className="flex justify-between items-center px-2 bg-gray-50 border-b-2 border-slate-100 sticky top-0 z-10 h-[52px]">
       <div className="flex items-center gap-2">
-        <img
-          className="w-[36px]"
-          src={`${CDN_URL}/assets/webapp/img/icZeplin.svg`}
-        />
+        <Link to="/">
+          <img
+            className="w-[36px]"
+            src={`${CDN_URL}/assets/webapp/img/icZeplin.svg`}
+          />
+        </Link>
         {previosPage && (
           <Link
             to={previosPage.url}

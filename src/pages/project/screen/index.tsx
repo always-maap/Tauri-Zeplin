@@ -148,11 +148,14 @@ const Screen = () => {
       className="overflow-hidden"
     >
       <div
-        className="relative w-full h-full p-8 overflow-auto"
+        className="w-full h-full p-8 overflow-auto"
         ref={rollerRef}
         style={{ cursor: stateProxy.cursor }}
       >
-        <div className="m-auto" style={{ width: (zoom / 100) * data.width }}>
+        <div
+          className="relative m-auto"
+          style={{ width: (zoom / 100) * data.width }}
+        >
           <img
             draggable={false}
             className="border-[1px] border-black select-none m-auto"
@@ -161,23 +164,25 @@ const Screen = () => {
             height={data.height}
             style={{ width: (zoom / 100) * data.width }}
           />
-          {/*data.layers.map((layer) => (
-            <div
-              key={layer.id}
-              onClick={() => {
-                if (layer.exportable) {
-                  console.log(getAssetUrl(layer.source_id));
-                }
-              }}
-              className="absolute hover:bg-amber-400/25"
-              style={{
-                width: `${(layer.rect.width / data.width) * 100}%`,
-                height: `${(layer.rect.height / data.height) * 100}%`,
-                top: layer.rect.y,
-                left: layer.rect.x,
-              }}
-            />
-          ))*/}
+          <div className="absolute top-0 left-0 w-full h-full">
+            {data.layers.map((layer) => (
+              <div
+                key={layer.id}
+                onClick={() => {
+                  if (layer.exportable) {
+                    console.log(layer.source_id);
+                  }
+                }}
+                className="absolute hover:bg-amber-400/25"
+                style={{
+                  width: `${(layer.rect.width / data.width) * 100}%`,
+                  height: `${(layer.rect.height / data.height) * 100}%`,
+                  top: `${(layer.rect.y / data.height) * 100}%`,
+                  left: `${(layer.rect.x / data.width) * 100}%`,
+                }}
+              />
+            ))}
+          </div>
         </div>
       </div>
       <div className="absolute p-4 z-10 bottom-4 left-0">

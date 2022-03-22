@@ -4,7 +4,10 @@ import { getAllScreens } from "../../apis/projects/getAllScreens";
 import WithHover from "../../components/WithHover";
 
 const Screen = () => {
-  const { projectId, sectionId } = useParams();
+  const { projectId, sectionId } = useParams() as {
+    projectId: string;
+    sectionId: string;
+  };
   const { data, status } = useQuery(["screens", sectionId], () =>
     getAllScreens(projectId, sectionId)
   );

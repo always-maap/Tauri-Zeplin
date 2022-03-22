@@ -8,7 +8,7 @@ import { useHeader } from "../../hooks/useHeader";
 
 const Project = () => {
   const { setHeaderTitle, setPreviousPage } = useHeader();
-  const params = useParams();
+  const params = useParams() as { projectId: string; sectionId: string };
 
   const { data: screenSections, status: screenSectionsStatus } = useQuery(
     ["sections", params.projectId],

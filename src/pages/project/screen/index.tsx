@@ -6,7 +6,10 @@ import { getScreenLatestVersion } from "../../../apis/projects/getScreenLatestSc
 type CursorStateProxy = { cursor: "auto" | "grab" | "grabbing" };
 
 const Screen = () => {
-  const { projectId, screenId } = useParams();
+  const { projectId, screenId } = useParams() as {
+    projectId: string;
+    screenId: string;
+  };
   const { data, isLoading, isSuccess, status } = useQuery(
     ["screen", screenId],
     () => getScreenLatestVersion(projectId, screenId)
@@ -137,10 +140,6 @@ const Screen = () => {
   if (!isSuccess) {
     return <div>Error...</div>;
   }
-
-  const getAssetUrl = (assetId: string) => {
-    return data.assets.find((asset) => asset.layer_source_id === assetId);
-  };
 
   return (
     <main

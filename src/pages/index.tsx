@@ -1,50 +1,56 @@
-import { useEffect } from "react";
-import { useQuery, useQueryClient } from "react-query";
-import { getAllProjects } from "../apis/projects/getAllProjects";
-import { getScreenSections } from "../apis/projects/getScreenSections";
-import Container from "../components/Container";
-import ProjectCard from "../components/ProjectCard";
+import { FormEvent, useEffect } from "react";
+import Button from "../components/Button";
+import Input from "../components/Input";
+import accessTokenHelp from "../assets/accessTokenHelp.png";
 import { useHeader } from "../hooks/useHeader";
+import { Navigate, useNavigate } from "react-router-dom";
+import { ApiManager } from "../helpers/apiManager";
+import { getAccessToken } from "../helpers/getAccessToken";
 
 const Home = () => {
-  const queryClient = useQueryClient();
-  const { setHeaderTitle, setPreviousPage } = useHeader();
-  const { data, status } = useQuery(["projects"], getAllProjects, {
-    onSuccess: (projects) => {
-      projects.map((project) => {
-        queryClient.prefetchQuery(["sections", project.id], () =>
-          getScreenSections(project.id)
-        );
-      });
-    },
-  });
+  const { setHeaderTitle } = useHeader();
+  const navigate = useNavigate();
+
+  if (getAccessToken()) {
+    return <Navigate to="/projects" />;
+  }
 
   useEffect(() => {
-    setHeaderTitle("Workspace");
-    setPreviousPage(undefined);
+    setHeaderTitle("Welcome");
   }, []);
 
-  if (status === "loading") {
-    return <Container>Loading...</Container>;
-  }
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const formData = new FormData(e.currentTarget);
+    e.preventDefault();
+    const accessToken = formData.get("accessToken");
 
-  if (status !== "success") {
-    return <Container>Error</Container>;
-  }
+    if (accessToken) {
+      window.localStorage.setItem("accessToken", accessToken.toString());
+      ApiManager.getInstance();
+
+      // TODO: ensure that the access token is valid
+
+      navigate("/projects");
+    }
+  };
 
   return (
-    <Container className="flex flex-wrap gap-6 py-4">
-      {data.map((project) => (
-        <ProjectCard
-          key={project.id}
-          id={project.id}
-          name={project.name}
-          platform={project.platform}
-          thumbnail={project.thumbnail}
-          updated={project.updated}
-        />
-      ))}
-    </Container>
+    <div className="flex flex-col justify-center items-center mt-4 gap-4">
+      <h1>This is an unoffial client of zeplin</h1>
+      <h3>This is an unoffial client of zeplin</h3>
+      <img width={400} src={accessTokenHelp} />
+      <form onSubmit={onSubmit} className="flex items-center gap-4">
+        <label>
+          Access Token
+          <Input
+            className="ml-4"
+            name="accessToken"
+            placeholder="Enter your accessToken"
+          />
+        </label>
+        <Button>Submit</Button>
+      </form>
+    </div>
   );
 };
 

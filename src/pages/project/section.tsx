@@ -8,19 +8,22 @@ const Screen = () => {
     projectId: string;
     sectionId: string;
   };
-  const { data, status } = useQuery(["screens", sectionId], () =>
+  const { data, isLoading, isSuccess } = useQuery(["screens", sectionId], () =>
     getAllScreens(projectId, sectionId)
   );
 
-  if (status === "loading") {
+  if (isLoading || !isSuccess) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-2">
-      {data?.map((screen) => (
-        <Link to={`/project/${projectId}/screen/${screen.id}`} key={screen.id}>
-          <div className="w-[240]">
+      {data.map((screen) => (
+        <div className="w-[240px]" key={screen.id}>
+          <Link
+            to={`/project/${projectId}/screen/${screen.id}`}
+            key={screen.id}
+          >
             <WithHover>
               <img
                 loading="lazy"
@@ -30,9 +33,9 @@ const Screen = () => {
                 height={(240 * screen.image.height) / screen.image.width}
               />
             </WithHover>
-            <span className="text-sm text-slate-700">{screen.name}</span>
-          </div>
-        </Link>
+          </Link>
+          <span className="text-sm text-slate-700">{screen.name}</span>
+        </div>
       ))}
     </div>
   );

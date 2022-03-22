@@ -3,11 +3,18 @@ import { Link } from "react-router-dom";
 import { CDN_URL } from "../constants/api";
 import { useHeader } from "../hooks/useHeader";
 import LeftArrow from "../assets/LeftArrow";
+import { useQuery } from "react-query";
+import { getCurrentUser } from "../apis/users/getCurrentUser";
+import Avatar from "./Avatar";
+import { getAccessToken } from "../helpers/getAccessToken";
 
 type Props = {};
 
 const NavBar: FC<Props> = () => {
   const { title, previosPage } = useHeader();
+  const { data, isSuccess } = useQuery(["me"], getCurrentUser, {
+    enabled: !!getAccessToken(),
+  });
 
   return (
     <header className="flex justify-between items-center px-2 bg-gray-50 border-b-2 border-slate-100 sticky top-0 z-10 h-[52px]">
@@ -29,7 +36,8 @@ const NavBar: FC<Props> = () => {
         )}
       </div>
       <span className="text-slate-500">{title}</span>
-      <span></span>
+
+      {isSuccess ? <Avatar name={data.username} /> : <span />}
     </header>
   );
 };

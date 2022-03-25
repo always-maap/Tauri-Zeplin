@@ -4,8 +4,8 @@ import Input from "../components/Input";
 import accessTokenHelp from "../assets/accessTokenHelp.png";
 import { useHeader } from "../hooks/useHeader";
 import { Navigate, useNavigate } from "react-router-dom";
-import { ApiManager } from "../helpers/apiManager";
 import { getAccessToken } from "../helpers/getAccessToken";
+import "../helpers/apiManager";
 
 const Home = () => {
   const { setHeaderTitle } = useHeader();
@@ -26,7 +26,6 @@ const Home = () => {
 
     if (accessToken) {
       window.localStorage.setItem("accessToken", accessToken.toString());
-      ApiManager.getInstance();
 
       // TODO: ensure that the access token is valid
 

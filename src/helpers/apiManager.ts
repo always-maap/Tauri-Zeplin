@@ -1,31 +1,34 @@
-import { getAccessToken } from "../helpers/getAccessToken";
+let accessToken: null | string = null;
 
-export class ApiManager {
-  accessToken: string | null;
-  private static instance: ApiManager;
-
-  private constructor() {
-    this.accessToken = getAccessToken();
+const getAccessTokenFromLocalStorage = () => {
+  if (!accessToken) {
+    accessToken = localStorage.getItem("accessToken");
   }
 
-  static getInstance() {
-    if (!ApiManager.instance) {
-      ApiManager.instance = new ApiManager();
+  return accessToken;
+};
+
+window.fetch = new Proxy(window.fetch, {
+  apply: (target, thisArg, argumentsList) => {
+    let [url, options] = argumentsList;
+
+    const token = getAccessTokenFromLocalStorage();
+    if (accessToken) {
+      if (options) {
+        options.headers = {
+          ...options.headers,
+          Authorization: `Bearer ${token}`,
+        };
+      } else {
+        options = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      }
     }
+    return target.apply(thisArg, [url, options]);
+  },
+});
 
-    return ApiManager.instance;
-  }
-
-  fetchApi(endpoint: string, config?: RequestInit) {
-    const baseConfig: RequestInit = {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    };
-
-    return fetch(endpoint, {
-      ...baseConfig,
-      ...config,
-    });
-  }
-}
+export {};

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { getScreenLatestVersion } from "../../../apis/projects/getScreenLatestScreenVersion";
+import { useScreen } from "../../../hooks/useScreen";
 
 type CursorStateProxy = { cursor: "auto" | "grab" | "grabbing" };
 
@@ -10,10 +9,7 @@ const Screen = () => {
     projectId: string;
     screenId: string;
   };
-  const { data, isLoading, isSuccess, status } = useQuery(
-    ["screen", screenId],
-    () => getScreenLatestVersion(projectId, screenId)
-  );
+  const { data, isLoading, isSuccess, status } = useScreen(projectId, screenId);
   const [zoom, setZoom] = useState(50);
   const planeRef = useRef<HTMLDivElement>(null);
   const rollerRef = useRef<HTMLDivElement>(null);

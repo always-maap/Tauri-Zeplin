@@ -1,19 +1,15 @@
 import { useEffect } from "react";
-import { useQuery } from "react-query";
 import { Link, Outlet, useParams } from "react-router-dom";
-import { getScreenSections } from "../../apis/projects/getScreenSections";
 import Button from "../../components/Button";
 import Container from "../../components/Container";
 import { useHeader } from "../../hooks/useHeader";
+import { useScreenSections } from "../../hooks/useScreenSections";
 
 const Project = () => {
   const { setHeaderTitle, setPreviousPage } = useHeader();
   const params = useParams() as { projectId: string; sectionId: string };
-
-  const { data: screenSections, status: screenSectionsStatus } = useQuery(
-    ["sections", params.projectId],
-    () => getScreenSections(params.projectId)
-  );
+  const { data: screenSections, status: screenSectionsStatus } =
+    useScreenSections(params.projectId);
 
   useEffect(() => {
     setHeaderTitle("Select a section");

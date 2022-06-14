@@ -1,16 +1,13 @@
-import { useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
-import { getAllScreens } from "../../apis/projects/getAllScreens";
 import WithHover from "../../components/WithHover";
+import { useAllScreens } from "../../hooks/useAllScreens";
 
 const Screen = () => {
   const { projectId, sectionId } = useParams() as {
     projectId: string;
     sectionId: string;
   };
-  const { data, isLoading, isSuccess } = useQuery(["screens", sectionId], () =>
-    getAllScreens(projectId, sectionId)
-  );
+  const { isLoading, isSuccess, data } = useAllScreens(projectId, sectionId);
 
   if (isLoading || !isSuccess) {
     return <div>Loading...</div>;

@@ -1,24 +1,13 @@
 import { useEffect } from "react";
-import { useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
-import { getAllProjects } from "../apis/projects/getAllProjects";
-import { getScreenSections } from "../apis/projects/getScreenSections";
 import Container from "../components/Container";
 import ProjectCard from "../components/ProjectCard";
+import { useAllProjects } from "../hooks/useAllProjects";
 import { useHeader } from "../hooks/useHeader";
 
 const Projects = () => {
-  const queryClient = useQueryClient();
   const { setHeaderTitle, setPreviousPage } = useHeader();
-  const { data, status } = useQuery(["projects"], getAllProjects, {
-    onSuccess: (projects) => {
-      projects.map((project) => {
-        queryClient.prefetchQuery(["sections", project.id], () =>
-          getScreenSections(project.id)
-        );
-      });
-    },
-  });
+  const { status, data } = useAllProjects();
 
   useEffect(() => {
     setHeaderTitle("Workspace");

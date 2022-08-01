@@ -1,6 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import WithHover from "../../components/WithHover";
+import { IMAGE_SERVER_URL } from "../../constants/api";
+import { getSectionEncoded } from "../../helpers/zeplinCDN";
 import { useAllScreens } from "../../hooks/useAllScreens";
+
+const options = new URLSearchParams({
+  w: "270",
+});
 
 const Screen = () => {
   const { projectId, sectionId } = useParams() as {
@@ -24,7 +30,9 @@ const Screen = () => {
             <WithHover>
               <img
                 loading="lazy"
-                src={screen.image.thumbnails.small}
+                src={`${IMAGE_SERVER_URL}/${getSectionEncoded(
+                  screen.image.original_url
+                )}?${options}`}
                 className="border-2 border-slate-200 object-cover object-top max-h-[520px]"
                 width={240}
                 height={(240 * screen.image.height) / screen.image.width}

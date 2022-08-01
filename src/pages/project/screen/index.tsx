@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import { convertPublicCDN } from "../../../helpers/zeplinCDN";
 import { useScreen } from "../../../hooks/useScreen";
 
 type CursorStateProxy = { cursor: "auto" | "grab" | "grabbing" };
@@ -155,7 +156,7 @@ const Screen = () => {
           <img
             draggable={false}
             className="border-[1px] border-black select-none m-auto"
-            src={data.thumbnails.large}
+            src={convertPublicCDN(data.image_url)}
             width={data.width}
             height={data.height}
             style={{ width: (zoom / 100) * data.width }}

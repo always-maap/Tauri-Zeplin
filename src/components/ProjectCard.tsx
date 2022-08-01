@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { IMAGE_SERVER_URL } from "../constants/api";
-import { getThumbnailencoded } from "../helpers/normalizeThumbnail";
+import { getThumbnailencoded } from "../helpers/zeplinCDN";
 import { Project } from "../types/project";
 import TimeAgo from "./TimeAgo";
 import WithHover from "./WithHover";
@@ -13,17 +13,18 @@ type Props = {
   updated: Project["updated"];
 };
 
+const options = new URLSearchParams({
+  w: "270",
+  cropTop: "0",
+  cropLeft: "0",
+  cropWidth: "270",
+  cropHeight: "130",
+});
+
 const ProjectCard: FC<Props> = (props) => {
   const { id, name, platform, thumbnail, updated } = props;
 
   const encodedThumbnail = getThumbnailencoded(id, thumbnail);
-  const options = new URLSearchParams({
-    w: "270",
-    cropTop: "0",
-    cropLeft: "0",
-    cropWidth: "270",
-    cropHeight: "130",
-  });
 
   return (
     <WithHover>

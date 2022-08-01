@@ -1,4 +1,24 @@
-# Tauri-Zeplin
-Elegant zeplin client with a focus on SPEED and UX
+<div align="center">
+  <a href="https://github.com/always-maap/Tauri-Zeplin">
+    <img width="150px;" src="https://raw.githubusercontent.com/always-maap/Tauri-Zeplin/master/public/android-chrome-256x256.png" alt="zeplin logo" />
+  </a>
+  
+  <p>Elegant zeplin client with a focus on offline experience, speed and UX</p>
+  
+</div>
 
-![Farvardin-02-1401 18-51-55](https://user-images.githubusercontent.com/58308349/159504316-5e21e54e-dd40-4a70-bd0e-3eadbef88b73.gif)
+## ❓ Why
+
+## 🚀 Features
+
+![offline experience](https://raw.githubusercontent.com/always-maap/Tauri-Zeplin/master/kap-1.gif)
+
+-
+-
+-
+
+## 🦄 Usage
+
+## 📄 License
+
+MIT License © 2020-PRESENT [TuR1NG](https://github.com/always-maap)

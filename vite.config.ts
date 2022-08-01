@@ -10,10 +10,17 @@ export default defineConfig({
         enabled: true,
         type: "module",
       },
-      injectRegister: null,
-      strategies: "injectManifest",
-      srcDir: "src",
-      filename: "sw.ts",
+      workbox: {
+        runtimeCaching: [
+          {
+            handler: "StaleWhileRevalidate",
+            urlPattern: (e) => e.request.url.includes("zeplin"),
+            options: {
+              cacheName: "zeplin-pwa",
+            },
+          },
+        ],
+      },
       manifest: {
         name: "Zeplin",
         short_name: "Zeplin",

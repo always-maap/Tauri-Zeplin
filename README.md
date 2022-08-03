@@ -8,6 +8,10 @@
 </div>
 
 ## ❓ Why
+I use zeplin every day. I'm mainly browsing screens and discussing with UI/UX and PO teams. Although it's great most of the time, it lacks the desired features. Offline experience, change image quality, client caching, disabling layers and assets, lazy loading, etc.
+
+It won't be a one-to-one match to zeplin but an alternative for viewing and moving quickly between projects and screens. I'll try to implement core features as much as possible.
+
 
 ## 🚀 Features
 
